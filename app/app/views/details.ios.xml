@@ -1,0 +1,4 @@
+<Page navigatedTo="navigatedTo" load="foo">
+	<StackLayout loaded="loadMap">
+	</StackLayout>
+</Page>

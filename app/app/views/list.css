@@ -1,0 +1,13 @@
+GridPanel {
+	background-color: white;
+}
+StackPanel {
+	margin: 10;
+}
+Label {
+	margin: 10;
+}
+.heading {
+	font-size: 20;
+	font-weight: bold;
+}

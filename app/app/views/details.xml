@@ -1,0 +1,5 @@
+<Page navigatedTo="navigatedTo">
+	<StackLayout loaded="loadMap">
+		<Image url="{{ mapUrl }}" />
+	</StackLayout>
+</Page>
