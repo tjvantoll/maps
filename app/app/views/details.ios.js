@@ -1,25 +1,15 @@
-var place,
-	panel;
+var observableModule = require( "data/observable" ),
+	pageData = new observableModule.Observable(),
+	page;
 
-function loadMap() {
-	var map = MKMapView.alloc().initWithFrame(
-			UIScreen.mainScreen().bounds ),
-		location = CLLocationCoordinate2DMake( place.Latitude, place.Longitude ),
-		span = new MKCoordinateSpan({ latitudeDelta: 0.3, longitudeDelta: 0.3 }),
-		region = new MKCoordinateRegion({ center: location, span: span });
-
-	map.region = region;
-	panel.addSubview( map );
-	loadedMap = true;
+exports.loaded = function( args ) {
+	page = args.object;
+	page.bindingContext = pageData;
 }
 
 exports.navigatedTo = function( args ) {
-	var page = args.object;
-	place = page.navigationContext;
+	var place = args.object.navigationContext;
 	page.ios.title = place.Name + ", " + place.Country;
-	loadMap();
+	pageData.set( "latitude", place.Latitude );
+	pageData.set( "longitude", place.Longitude );
 };
-
-exports.loadMap = function( args ) {
-	panel = args.object.ios;
-}

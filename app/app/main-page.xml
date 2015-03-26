@@ -1,0 +1,5 @@
+<Page xmlns:maps="app/maps/maps">
+	<maps:Map
+		latitude="42.7"
+		longitude="23.3" />
+</Page>
