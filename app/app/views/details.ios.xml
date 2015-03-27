@@ -1,6 +1,3 @@
 <Page xmlns:maps="app/maps/maps" navigatedTo="navigatedTo" loaded="loaded">
-	<maps:Map latitude="42.7" longitude="23.3" />
-
-	<!-- WHY DOESN'T THIS WORK??? -->
-	<!-- <maps:Map latitude="{{ latitude }}" longitude="{{ longitude }}" /> -->
+	<maps:Map latitude="{{ latitude }}" longitude="{{ longitude }}" />
 </Page>

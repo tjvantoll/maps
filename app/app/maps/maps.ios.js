@@ -8,6 +8,12 @@ function Map() {
 }
 Map.prototype = new stackLayout.StackLayout();
 Map.prototype.updateLocation = function() {
+	// Guard against bad data.
+	if ( this.latitude == "0" || this.longitude == "0" || 
+		this.latitude.indexOf( "{" ) > -1 || this.longitude.indexOf( "{" ) > -1  ) {
+		return;
+	}
+
 	var location = CLLocationCoordinate2DMake( this.latitude, this.longitude ),
 		span = new MKCoordinateSpan({ latitudeDelta: 0.3, longitudeDelta: 0.3 }),
 		region = new MKCoordinateRegion({ center: location, span: span });
@@ -17,26 +23,26 @@ Map.prototype.updateLocation = function() {
 
 var properties = [ "latitude", "longitude" ];
 properties.forEach(function( name ) {
-	exports[ name + "Property" ] = new dependencyObservable.Property(
-		name,
-		"0",
+	var property = new dependencyObservable.Property(
+		name,        // Name of the attribute
+		"id" + name, // id? Still not sure what this is
 		new dependencyObservable.PropertyMetadata(
-			false,
+			0,       // default value of the attribute
 			dependencyObservable.PropertyMetadataSettings.None,
-			null
+			function( data ) {
+				data.object.updateLocation();
+			}
 		)
 	);
+	exports[ name + "Property" ] = property;
 
 	Object.defineProperty( Map.prototype, name, {
 		get: function() {
-			return this._getValue( exports[ name + "Property" ] );
+			return this._getValue( property );
 		},
 		set: function( value ) {
-			this._setValue( exports[ name + "Property" ], value );
-			this.updateLocation();
-		},
-		enumerable: true,
-		configurable: true
+			this._setValue( property, value );
+		}
 	});
 });
 
